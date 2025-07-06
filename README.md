@@ -1,52 +1,36 @@
-# Telegram Bot – Secret Hitler (Persian Fork)
+# Telegram Bot for the card game Secret Hitler
 
-این مخزن فورک نسخهٔ اصلی بات «Secret Hitler» است و چند بهبود مهم برای کاربری فارسی‌زبانان و تست تک‌نفره اضافه می کند.
+*(This repository is **a Persian‑language fork** of the original project.  It adds single‑player debug mode, RTL fixes, and Farsi defaults while keeping full compatibility with upstream.  The original English README is preserved below for convenience.)*
 
-> **بازی را بشناسید:** اگر با Secret Hitler آشنا نیستید، از وب‌سایت رسمی [Secret Hitler](https://secrethitler.com/) دیدن کنید و حتماً از سازندگان حمایت نمایید.
+This is a simple Telegram Bot for the political (and in my opinion highly entertaining and educational) card game [Secret Hitler](http://secrethitler.com/).
+Go check out this awesome game and support the creators!
 
----
+## Start a game
 
-## شروع بازی
-۱. در تلگرام به بات [@SecretHitlerPersianBot](https://t.me/SecretHitlerPersianBot) پیام «Start» بدهید.  
-۲. بات را به گروه خود اضافه کنید (۵ تا ۱۰ نفر).  
-۳. راهنمای داخل خط به‌صورت خودکار مراحل را توضیح می‌دهد.
+You can contact the bot via [t.me/SecretHitlerFaBot](https://t.me/SecretHitlerFaBot) or in Telegram under the name @SecretHitlerFaBot.
+Click Start and add the bot to your group (you need 5-10 people). The rest should be self explanatory.
+If you have any problems or find a bug please open an issue here on GitHub!
 
-اگر باگ یا مشکلی دیدید، لطفاً در **Issues** همین مخزن گزارش دهید.
+## The following commands are available:
 
----
+```
+/help        Gives you information about the available commands
+/start       Gives you a short piece of information about Secret Hitler
+/symbols     Shows you all possible symbols of the board
+/rules       Gives you a link to the official Secret Hitler rules
+/newgame     Creates a new game
+/join        Joins an existing game
+/startgame   Starts an existing game when all players have joined
+/cancelgame  Cancels an existing game. All data of the game will be lost
+/board       Prints the current board with fascist and liberal tracks, presidential order and election counter
+```
 
-## دستورات در دسترس
-| دستور | توضیح |
-|-------|-------|
-| `/help` | فهرست همین دستورات |
-| `/start` | توضیح کوتاه دربارهٔ بازی |
-| `/symbols` | تمام نمادهای برد |
-| `/rules` | لینک قوانین رسمی |
-| `/newgame` | ساخت بازی جدید |
-| `/join` | پیوستن به بازی باز |
-| `/startgame` | شروع بازی پس از تکمیل بازیکنان |
-| `/cancelgame` | لغو بازی و حذف داده‌ها |
-| `/board` | نمایش وضعیت فعلی برد |
-| `/debugsolo` | **(جدید)** حالت تست تک‌نفره با Botهای خودکار |
+## Test new features
 
-> برای تست سریع و رفع باگ می‌توانید از دستور `/debugsolo` استفاده کنید؛ این حالت بدون نیاز به بازیکن واقعی، تمام مسیرهای بازی را شبیه‌سازی می‌کند.
+The bot above is not necessarily running the latest code of this GitHub repo. To test new features you can use [@sechit\_testbot](https://t.me/sechit_testbot). After some test games and a few weeks the latest code is also deployed to the main bot.
 
----
+## Copyright and licence
 
-## ویژگی‌های اضافه‌شده در این فورک
-* پشتیبانی کامل از پیام‌ها و دکمه‌های فارسی.
-* حالت **تک‌نفره** (`/debugsolo`) با رأی‌دهی و سیاست‌گذاری خودکار Botهای فیک.
-* امکان استفاده از **Custom Emoji** حرفه‌ای در پیام‌ها (نیاز به Telegram Premium).
-* به‌روزرسانی به `python-telegram-bot v22` و حذف `sleep`‎های بلاکر.
+Secret Hitler (© 2016 GOAT, WOLF, & CABBAGE) is designed by Max Temkin (Cards Against Humanity, Humans vs. Zombies), Mike Boxleiter (Solipskier, TouchTone), Tommy Maranges (Philosophy Bro) and illustrated by Mackenzie Schubert (Letter Tycoon, Penny Press).
 
----
-
-## تست نسخهٔ توسعه
-بات اصلی همیشه آخرین کامیت را اجرا نمی‌کند. برای آزمایش قابلیت‌های جدید، می‌توانید از بات آزمایشی [@SHP_TestBot](https://t.me/SHP_TestBot) استفاده کنید.
-
----
-
-## مجوز و حق‌کپی
-Secret Hitler (© 2016 GOAT, WOLF, & CABBAGE) طراحی Max Temkin, Mike Boxleiter, Tommy Maranges و با تصویرسازی Mackenzie Schubert است.  
-بازی و این بات تحت مجوز [Creative Commons BY‑NC‑SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) منتشر شده‌اند.
-
+Secret Hitler is licensed under [Creative Commons BY‑NC‑SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) and so is this bot.
