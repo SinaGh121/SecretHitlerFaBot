@@ -24,36 +24,37 @@ log.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 logger = log.getLogger(__name__)
 
 commands = [  # command description used in the "help" command
-    '/help - Gives you information about the available commands',
-    '/start - Gives you a short piece of information about Secret Hitler',
-    '/symbols - Shows you all possible symbols of the board',
-    '/rules - Gives you a link to the official Secret Hitler rules',
-    '/newgame - Creates a new game',
-    '/join - Joins an existing game',
-    '/startgame - Starts an existing game when all players have joined',
-    '/cancelgame - Cancels an existing game. All data of the game will be lost',
-    '/board - Prints the current board with fascist and liberals tracks, presidential order and election counter',
-    '/votes - Prints who voted',
-    '/calltovote - Calls the players to vote'
+    '\u061C\u200E/help\u200E - فهرست دستورهای موجود را نمایش می‌دهد',
+    '\u061C\u200E/start\u200E - توضیح کوتاهی دربارهٔ راز هیتلر ارائه می‌دهد',
+    '\u061C\u200E/symbols\u200E - همهٔ نمادهای ممکنِ صفحه را نمایش می‌دهد',
+    '\u061C\u200E/rules\u200E - پیوندی به قوانین رسمی راز هیتلر می‌دهد',
+    '\u061C\u200E/newgame\u200E - یک بازی جدید ایجاد می‌کند',
+    '\u061C\u200E/join\u200E - به یک بازی موجود می‌پیوندد',
+    '\u061C\u200E/startgame\u200E - پس از پیوستن همهٔ بازیکنان، بازی را آغاز می‌کند',
+    '\u061C\u200E/cancelgame\u200E - بازی موجود را لغو می‌کند؛ تمام داده‌های بازی از بین می‌رود',
+    '\u061C\u200E/board\u200E - صفحهٔ فعلی را با مسیرهای سیاست فاشیست و لیبرال، ترتیب ریاست‌جمهوری و شمارندهٔ انتخابات نشان می‌دهد',
+    '\u061C\u200E/votes\u200E - رأی هر بازیکن را نمایش می‌دهد',
+    '\u061C\u200E/calltovote\u200E - بازیکنان را برای رأی‌گیری فرا می‌خواند'
 ]
 
-symbols = [
-    u"\u25FB\uFE0F" + ' Empty field without special power',
-    u"\u2716\uFE0F" + ' Field covered with a card',  # X
-    u"\U0001F52E" + ' Presidential Power: Policy Peek',  # crystal
-    u"\U0001F50E" + ' Presidential Power: Investigate Loyalty',  # inspection glass
-    u"\U0001F5E1" + ' Presidential Power: Execution',  # knife
-    u"\U0001F454" + ' Presidential Power: Call Special Election',  # tie
-    u"\U0001F54A" + ' Liberals win',  # dove
-    u"\u2620" + ' Fascists win'  # skull
+
+symbols = [  # board status symbols
+    u'\u200F\u25FB\uFE0F خانهٔ خالی بدون قدرت ویژه',
+    u'\u200F\u2716\uFE0F خانهٔ پوشیده‌شده با کارت',
+    u'\u200F\U0001F52E قدرت ریاست‌جمهوری: بررسی سیاست‌ها',
+    u'\u200F\U0001F50E قدرت ریاست‌جمهوری: بررسی وفاداری',
+    u'\u200F\U0001F5E1 قدرت ریاست‌جمهوری: اعدام',
+    u'\u200F\U0001F454 قدرت ریاست‌جمهوری: برگزاری انتخابات ویژه',
+    u'\u200F\U0001F54A پیروزی لیبرال‌ها',
+    u'\u200F\u2620 پیروزی فاشیست‌ها'
 ]
 
 
 def command_symbols(bot, update):
     cid = update.message.chat_id
-    symbol_text = "The following symbols can appear on the board: \n"
+    symbol_text = '\u200Fنمادهای زیر ممکن است روی صفحه ظاهر شوند:\n'
     for i in symbols:
-        symbol_text += i + "\n"
+        symbol_text += i + '\n'
     bot.send_message(cid, symbol_text)
 
 
@@ -63,28 +64,36 @@ def command_board(bot, update):
         if GamesController.games[cid].board:
             bot.send_message(cid, GamesController.games[cid].board.print_board())
         else:
-            bot.send_message(cid, "There is no running game in this chat. Please start the game with /startgame")
+            bot.send_message(
+                cid,
+                '\u200Fهیچ بازی در حال اجرا در این چت وجود ندارد. با \u200E/startgame\u200E بازی را آغاز کنید'
+            )
     else:
-        bot.send_message(cid, "There is no game in this chat. Create a new game with /newgame")
+        bot.send_message(
+            cid,
+            '\u200Fهیچ بازی‌ای در این چت وجود ندارد. با \u200E/newgame\u200E یک بازی جدید بسازید'
+        )
 
 
 def command_start(bot, update):
     cid = update.message.chat_id
-    bot.send_message(cid,
-                     "\"Secret Hitler is a social deduction game for 5-10 people about finding and stopping the Secret Hitler."
-                     " The majority of players are liberals. If they can learn to trust each other, they have enough "
-                     "votes to control the table and win the game. But some players are fascists. They will say whatever "
-                     "it takes to get elected, enact their agenda, and blame others for the fallout. The liberals must "
-                     "work together to discover the truth before the fascists install their cold-blooded leader and win "
-                     "the game.\"\n- official description of Secret Hitler\n\nAdd me to a group and type /newgame to create a game!")
+    bot.send_message(
+        cid,
+        '\u200F"«راز هیتلر» یک بازی نقش‌پنهان اجتماعی برای ۵ تا ۱۰ نفر است دربارهٔ پیدا کردن و متوقف کردن راز هیتلر. '
+        'اکثریتِ بازیکنان لیبرال هستند؛ اگر بتوانند به یکدیگر اعتماد کنند، رأی کافی برای کنترل میز و پیروزی در بازی خواهند داشت. '
+        'اما بعضی بازیکنان فاشیست‌اند؛ آن‌ها هر چه لازم باشد می‌گویند تا انتخاب شوند، برنامهٔ خود را اجرا کنند و دیگران را مقصر پیامدها جلوه دهند. '
+        'لیبرال‌ها باید با هم همکاری کنند تا حقیقت را کشف کنند پیش از آنکه فاشیست‌ها رهبر سنگدل خود را منصوب کرده و بازی را ببرند."\n'
+        '- توضیح رسمی راز هیتلر\n\n'
+        'مرا به یک گروه اضافه کنید و برای ساخت بازی \u200E/newgame\u200E را بنویسید!'
+    )
     command_help(bot, update)
 
 
 def command_rules(bot, update):
     cid = update.message.chat_id
-    btn = [[InlineKeyboardButton("Rules", url="http://www.secrethitler.com/assets/Secret_Hitler_Rules.pdf")]]
+    btn = [[InlineKeyboardButton('\u200Fقوانین', url="http://www.secrethitler.com/assets/Secret_Hitler_Rules.pdf")]]
     rulesMarkup = InlineKeyboardMarkup(btn)
-    bot.send_message(cid, "Read the official Secret Hitler rules:", reply_markup=rulesMarkup)
+    bot.send_message(cid, '\u200Fقوانین رسمی راز هیتلر را بخوانید:', reply_markup=rulesMarkup)
 
 
 # pings the bot
@@ -99,23 +108,25 @@ def command_stats(bot, update):
     if cid == ADMIN:
         with open(STATS, 'r') as f:
             stats = json.load(f)
-        stattext = "+++ Statistics +++\n" + \
-                    "Liberal Wins (policies): " + str(stats.get("libwin_policies")) + "\n" + \
-                    "Liberal Wins (killed Hitler): " + str(stats.get("libwin_kill")) + "\n" + \
-                    "Fascist Wins (policies): " + str(stats.get("fascwin_policies")) + "\n" + \
-                    "Fascist Wins (Hitler chancellor): " + str(stats.get("fascwin_hitler")) + "\n" + \
-                    "Games cancelled: " + str(stats.get("cancelled")) + "\n\n" + \
-                    "Total amount of groups: " + str(len(stats.get("groups"))) + "\n" + \
-                    "Games running right now: "
+        stattext = (
+            '\u200F+++ آمار +++\n'
+            'پیروزی لیبرال‌ها (سیاست‌ها): ' + str(stats.get("libwin_policies")) + '\n'
+            'پیروزی لیبرال‌ها (کشتن هیتلر): ' + str(stats.get("libwin_kill")) + '\n'
+            'پیروزی فاشیست‌ها (سیاست‌ها): ' + str(stats.get("fascwin_policies")) + '\n'
+            'پیروزی فاشیست‌ها (هیتلر به‌عنوان صدراعظم): ' + str(stats.get("fascwin_blue")) + '\n'
+            'بازی‌های لغوشده: ' + str(stats.get("cancelled")) + '\n\n'
+            'تعداد کل گروه‌ها: ' + str(len(stats.get("groups"))) + '\n'
+            'بازی‌های در حال اجرا: '
+        )
         bot.send_message(cid, stattext)
 
 
 # help page
 def command_help(bot, update):
     cid = update.message.chat_id
-    help_text = "The following commands are available:\n"
+    help_text = '\u200Fدستورهای زیر در دسترس هستند:\n'
     for i in commands:
-        help_text += i + "\n"
+        help_text += i + '\n'
     bot.send_message(cid, help_text)
 
 
@@ -124,9 +135,15 @@ def command_newgame(bot, update):
     game = GamesController.games.get(cid, None)
     groupType = update.message.chat.type
     if groupType not in ['group', 'supergroup']:
-        bot.send_message(cid, "You have to add me to a group first and type /newgame there!")
+        bot.send_message(
+            cid,
+            '\u200Fابتدا باید مرا به یک گروه اضافه کنید و سپس دستور \u200E/newgame\u200E را در همان گروه وارد کنید!'
+        )
     elif game:
-        bot.send_message(cid, "There is currently a game running. If you want to end it please type /cancelgame!")
+        bot.send_message(
+            cid,
+            '\u200Fهم‌اکنون یک بازی در حال اجرا است؛ برای پایان دادن به آن، دستور \u200E/cancelgame\u200E را وارد کنید!'
+        )
     else:
         GamesController.games[cid] = Game(cid, update.message.from_user.id)
         with open(STATS, 'r') as f:
@@ -135,7 +152,12 @@ def command_newgame(bot, update):
             stats.get("groups").append(cid)
             with open(STATS, 'w') as f:
                 json.dump(stats, f)
-        bot.send_message(cid, "New game created! Each player has to /join the game.\nThe initiator of this game (or the admin) can /join too and type /startgame when everyone has joined the game!")
+        bot.send_message(
+            cid,
+            '\u200Fبازی جدید ساخته شد! هر بازیکن باید با دستور \u200E/join\u200E به بازی بپیوندد.\n'
+            'آغازگر بازی (یا مدیر) نیز می‌تواند \u200E/join\u200E کند و پس از پیوستن همه، دستور '
+            '\u200E/startgame\u200E را وارد نماید!'
+        )
 
 
 def command_join(bot, update):
@@ -146,32 +168,65 @@ def command_join(bot, update):
     fname = update.message.from_user.first_name
 
     if groupType not in ['group', 'supergroup']:
-        bot.send_message(cid, "You have to add me to a group first and type /newgame there!")
+        bot.send_message(
+            cid,
+            '\u200Fابتدا باید مرا به یک گروه اضافه کنید و سپس دستور \u200E/newgame\u200E را در همان گروه وارد کنید!'
+        )
     elif not game:
-        bot.send_message(cid, "There is no game in this chat. Create a new game with /newgame")
+        bot.send_message(
+            cid,
+            '\u200Fهیچ بازی‌ای در این چت وجود ندارد. با دستور \u200E/newgame\u200E یک بازی جدید بسازید.'
+        )
     elif game.board:
-        bot.send_message(cid, "The game has started. Please wait for the next game!")
+        bot.send_message(
+            cid,
+            '\u200Fبازی آغاز شده است. لطفاً منتظر بازی بعدی بمانید!'
+        )
     elif update.message.from_user.id in game.playerlist:
-        bot.send_message(game.cid, "You already joined the game, %s!" % fname)
+        bot.send_message(
+            game.cid,
+            '\u200Fشما قبلاً به بازی پیوسته‌اید، %s!' % fname
+        )
     elif len(game.playerlist) >= 10:
-        bot.send_message(game.cid, "You have reached the maximum amount of players. Please start the game with /startgame!")
+        bot.send_message(
+            game.cid,
+            '\u200Fبه حداکثر تعداد بازیکنان رسیده‌اید. لطفاً بازی را با دستور \u200E/startgame\u200E آغاز کنید!'
+        )
     else:
         uid = update.message.from_user.id
         player = Player(fname, uid)
         try:
-            bot.send_message(uid, "You joined a game in %s. I will soon tell you your secret role." % groupName)
+            bot.send_message(
+                uid,
+                '\u200Fشما به بازی در %s پیوستید. به‌زودی نقش مخفی شما را اعلام خواهم کرد.' % groupName
+            )
             game.add_player(uid, player)
         except Exception:
-            bot.send_message(game.cid,
-                             fname + ", I can\'t send you a private message. Please go to @thesecrethitlerbot and click \"Start\".\nYou then need to send /join again.")
+            bot.send_message(
+                game.cid,
+                '\u200F%s، نمی‌توانم پیام خصوصی برایتان بفرستم. لطفاً به \u200E@thesecretbluebot\u200E بروید و '
+                'روی «\u200EStart\u200E» کلیک کنید.\nسپس باید دوباره دستور \u200E/join\u200E را ارسال کنید.' % fname
+            )
         else:
             log.info("%s (%d) joined a game in %d" % (fname, uid, game.cid))
             if len(game.playerlist) > 4:
-                bot.send_message(game.cid, fname + " has joined the game. Type /startgame if this was the last player and you want to start with %d players!" % len(game.playerlist))
+                bot.send_message(
+                    game.cid,
+                    '\u200F%s به بازی پیوست. اگر این آخرین بازیکن است و می‌خواهید بازی را با %d بازیکن آغاز کنید، '
+                    'دستور \u200E/startgame\u200E را وارد کنید!' % (fname, len(game.playerlist))
+                )
             elif len(game.playerlist) == 1:
-                bot.send_message(game.cid, "%s has joined the game. There is currently %d player in the game and you need 5-10 players." % (fname, len(game.playerlist)))
+                bot.send_message(
+                    game.cid,
+                    '\u200F%s به بازی پیوست. هم‌اکنون %d بازیکن در بازی است و شما به ۵ تا ۱۰ بازیکن نیاز دارید.'
+                    % (fname, len(game.playerlist))
+                )
             else:
-                bot.send_message(game.cid, "%s has joined the game. There are currently %d players in the game and you need 5-10 players." % (fname, len(game.playerlist)))
+                bot.send_message(
+                    game.cid,
+                    '\u200F%s به بازی پیوست. هم‌اکنون %d بازیکن در بازی هستند و شما به ۵ تا ۱۰ بازیکن نیاز دارید.'
+                    % (fname, len(game.playerlist))
+                )
 
 
 def command_startgame(bot, update):
@@ -179,13 +234,25 @@ def command_startgame(bot, update):
     cid = update.message.chat_id
     game = GamesController.games.get(cid, None)
     if not game:
-        bot.send_message(cid, "There is no game in this chat. Create a new game with /newgame")
+        bot.send_message(
+            cid,
+            '\u200Fهیچ بازی‌ای در این چت وجود ندارد. با دستور \u200E/newgame\u200E یک بازی جدید بسازید'
+        )
     elif game.board:
-        bot.send_message(cid, "The game is already running!")
+        bot.send_message(
+            cid,
+            '\u200Fبازی هم‌اکنون در حال اجرا است!'
+        )
     elif update.message.from_user.id != game.initiator and bot.getChatMember(cid, update.message.from_user.id).status not in ("administrator", "creator"):
-        bot.send_message(game.cid, "Only the initiator of the game or a group admin can start the game with /startgame")
+        bot.send_message(
+            game.cid,
+            '\u200Fفقط آغازگر بازی یا مدیر گروه می‌تواند با دستور \u200E/startgame\u200E بازی را آغاز کند'
+        )
     elif len(game.playerlist) < 5:
-        bot.send_message(game.cid, "There are not enough players (min. 5, max. 10). Join the game with /join")
+        bot.send_message(
+            game.cid,
+            '\u200Fتعداد بازیکنان کافی نیست (حداقل ۵، حداکثر ۱۰). با دستور \u200E/join\u200E به بازی بپیوندید'
+        )
     else:
         player_number = len(game.playerlist)
         MainController.inform_players(bot, game, game.cid, player_number)
@@ -196,9 +263,8 @@ def command_startgame(bot, update):
         game.shuffle_player_sequence()
         game.board.state.player_counter = 0
         bot.send_message(game.cid, game.board.print_board())
-        #group_name = update.message.chat.title
-        #bot.send_message(ADMIN, "Game of Secret Hitler started in group %s (%d)" % (group_name, cid))
         MainController.start_round(bot, game)
+
 
 def command_cancelgame(bot, update):
     log.info('command_cancelgame called')
@@ -209,71 +275,80 @@ def command_cancelgame(bot, update):
         if update.message.from_user.id == game.initiator or status in ("administrator", "creator"):
             MainController.end_game(bot, game, 99)
         else:
-            bot.send_message(cid, "Only the initiator of the game or a group admin can cancel the game with /cancelgame")
+            bot.send_message(
+                cid,
+                '\u200Fفقط آغازگر بازی یا مدیر گروه می‌تواند با دستور \u200E/cancelgame\u200E بازی را لغو کند'
+            )
     else:
-        bot.send_message(cid, "There is no game in this chat. Create a new game with /newgame")
+        bot.send_message(
+            cid,
+            '\u200Fهیچ بازی‌ای در این چت وجود ندارد. با دستور \u200E/newgame\u200E یک بازی جدید بسازید'
+        )
 
 
 def command_votes(bot, update):
     try:
-        #Send message of executing command
+        # Send message of executing command
         cid = update.message.chat_id
-        #bot.send_message(cid, "Looking for history...")
-        #Check if there is a current game
+        # Check if there is a current game
         if cid in GamesController.games.keys():
             game = GamesController.games.get(cid, None)
             if not game.dateinitvote:
-                # If date of init vote is null, then the voting didnt start
-                bot.send_message(cid, "The voting didn't start yet.")
+                bot.send_message(cid, '\u200Fرأی‌گیری هنوز شروع نشده است.')
             else:
-                #If there is a time, compare it and send history of votes.
                 start = game.dateinitvote
                 stop = datetime.datetime.now()
                 elapsed = stop - start
                 if elapsed > datetime.timedelta(minutes=1):
-                    history_text = "Vote history for President %s and Chancellor %s:\n\n" % (game.board.state.nominated_president.name, game.board.state.nominated_chancellor.name)
+                    history_text = (
+                        '\u200Fتاریخچهٔ رأی‌گیری برای رئیس‌جمهور %s و صدراعظم %s:\n\n'
+                        % (game.board.state.nominated_president.name, game.board.state.nominated_chancellor.name)
+                    )
                     for player in game.player_sequence:
-                        # If the player is in the last_votes (He voted), mark him as he registered a vote
                         if player.uid in game.board.state.last_votes:
-                            history_text += "%s registered a vote.\n" % (game.playerlist[player.uid].name)
+                            history_text += '%s رأی خود را ثبت کرد.\n' % game.playerlist[player.uid].name
                         else:
-                            history_text += "%s didn't register a vote.\n" % (game.playerlist[player.uid].name)
+                            history_text += '%s رأی خود را ثبت نکرد.\n' % game.playerlist[player.uid].name
                     bot.send_message(cid, history_text)
                 else:
-                    bot.send_message(cid, "Five minutes must pass to see the votes")
+                    bot.send_message(cid, '\u200Fبرای مشاهدهٔ رأی‌ها باید پنج دقیقه بگذرد')
         else:
-            bot.send_message(cid, "There is no game in this chat. Create a new game with /newgame")
+            bot.send_message(
+                cid,
+                '\u200Fهیچ بازی‌ای در این چت وجود ندارد. با دستور \u200E/newgame\u200E یک بازی جدید بسازید'
+            )
     except Exception as e:
         bot.send_message(cid, str(e))
 
 
 def command_calltovote(bot, update):
     try:
-        #Send message of executing command
+        # Send message of executing command
         cid = update.message.chat_id
-        #bot.send_message(cid, "Looking for history...")
-        #Check if there is a current game
+        # Check if there is a current game
         if cid in GamesController.games.keys():
             game = GamesController.games.get(cid, None)
             if not game.dateinitvote:
-                # If date of init vote is null, then the voting didnt start
-                bot.send_message(cid, "The voting didn't start yet.")
+                bot.send_message(cid, '\u200Fرأی‌گیری هنوز شروع نشده است.')
             else:
-                #If there is a time, compare it and send history of votes.
                 start = game.dateinitvote
                 stop = datetime.datetime.now()
                 elapsed = stop - start
                 if elapsed > datetime.timedelta(minutes=1):
-                    # Only remember to vote to players that are still in the game
-                    history_text = ""
+                    history_text = ''
                     for player in game.player_sequence:
                         # If the player is not in last_votes send him reminder
                         if player.uid not in game.board.state.last_votes:
-                            history_text += "It's time to vote [%s](tg://user?id=%d).\n" % (game.playerlist[player.uid].name, player.uid)
+                            history_text += '\u200Fزمان رأی‌دادن است [%s](tg://user?id=%d).\n' % (
+                                game.playerlist[player.uid].name, player.uid
+                            )
                     bot.send_message(cid, text=history_text, parse_mode=ParseMode.MARKDOWN)
                 else:
-                    bot.send_message(cid, "Five minutes must pass to see call to vote")
+                    bot.send_message(cid, '\u200Fبرای مشاهدهٔ یادآوری رأی‌گیری باید پنج دقیقه بگذرد')
         else:
-            bot.send_message(cid, "There is no game in this chat. Create a new game with /newgame")
+            bot.send_message(
+                cid,
+                '\u200Fهیچ بازی‌ای در این چت وجود ندارد. با دستور \u200E/newgame\u200E یک بازی جدید بسازید'
+            )
     except Exception as e:
         bot.send_message(cid, str(e))

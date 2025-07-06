@@ -1,5 +1,6 @@
 from random import shuffle
 
+
 class Game(object):
     def __init__(self, cid, initiator):
         self.playerlist = {}
@@ -12,15 +13,15 @@ class Game(object):
     def add_player(self, uid, player):
         self.playerlist[uid] = player
 
-    def get_hitler(self):
+    def get_blue(self):
         for uid in self.playerlist:
-            if self.playerlist[uid].role == "Hitler":
+            if self.playerlist[uid].role == "هیتلر":
                 return self.playerlist[uid]
 
     def get_fascists(self):
         fascists = []
         for uid in self.playerlist:
-            if self.playerlist[uid].role == "Fascist":
+            if self.playerlist[uid].role == "فاشیست":
                 fascists.append(self.playerlist[uid])
         return fascists
 
@@ -37,12 +38,14 @@ class Game(object):
     def print_roles(self):
         rtext = ""
         if self.board is None:
-            #game was not started yet
+            # game was not started yet
             return rtext
         else:
             for p in self.playerlist:
-                rtext += self.playerlist[p].name + "'s "
+                line = '\u200F' + self.playerlist[p].name + ' '
                 if self.playerlist[p].is_dead:
-                    rtext += "(dead) "
-                rtext += "secret role was " + self.playerlist[p].role + "\n"
+                    line += '(مرده) '
+                line += 'نقش مخفی‌اش ' + self.playerlist[p].role + '\n'
+                rtext += line
             return rtext
+

@@ -1,172 +1,172 @@
+# مجموعهٔ نقش‌ها و مسیر تخته برای تعداد متفاوت بازیکنان
 playerSets = {
-    # only for testing purposes
-    3: {
+    3: {  # فقط برای تست
         "roles": [
-            "Liberal",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
             None,
             None,
-            "policy",
-            "kill",
-            "kill",
-            "win"
+            'سیاست',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
-    # only for testing purposes
-    4: {
+    4: {  # فقط برای تست
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'لیبرال',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
             None,
             None,
-            "policy",
-            "kill",
-            "kill",
-            "win"
+            'سیاست',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
     5: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
             None,
             None,
-            "policy",
-            "kill",
-            "kill",
-            "win"
+            'سیاست',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
     6: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
             None,
             None,
-            "policy",
-            "kill",
-            "kill",
-            "win"
+            'سیاست',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
     7: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'فاشیست',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
             None,
-            "inspect",
-            "choose",
-            "kill",
-            "kill",
-            "win"
+            'بازرسی',
+            'انتخاب',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
     8: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'فاشیست',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
             None,
-            "inspect",
-            "choose",
-            "kill",
-            "kill",
-            "win"
+            'بازرسی',
+            'انتخاب',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
     9: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'فاشیست',
+            'فاشیست',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
-            "inspect",
-            "inspect",
-            "choose",
-            "kill",
-            "kill",
-            "win"
+            'بازرسی',
+            'بازرسی',
+            'انتخاب',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
     10: {
         "roles": [
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Liberal",
-            "Fascist",
-            "Fascist",
-            "Fascist",
-            "Hitler"
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'لیبرال',
+            'فاشیست',
+            'فاشیست',
+            'فاشیست',
+            'هیتلر'
         ],
         "track": [
-            "inspect",
-            "inspect",
-            "choose",
-            "kill",
-            "kill",
-            "win"
+            'بازرسی',
+            'بازرسی',
+            'انتخاب',
+            'اعدام',
+            'اعدام',
+            'پیروزی'
         ]
     },
 }
 
+# بستهٔ سیاست‌ها
 policies = [
-        "liberal",
-        "liberal",
-        "liberal",
-        "liberal",
-        "liberal",
-        "liberal",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist",
-        "fascist"
-    ]
+    'لیبرال',
+    'لیبرال',
+    'لیبرال',
+    'لیبرال',
+    'لیبرال',
+    'لیبرال',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست',
+    'فاشیست'
+]
