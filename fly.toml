@@ -4,4 +4,4 @@ app = "secrethitlerfabot"
   dockerfile = "Dockerfile"
 
 [processes]
-  bot = "python MainController.py"
+  bot = "python app/MainController.py"
