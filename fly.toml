@@ -1,0 +1,7 @@
+app = "secrethitlerfabot"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[processes]
+  bot = "python app/MainController.py"
