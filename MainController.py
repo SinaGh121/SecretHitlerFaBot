@@ -226,11 +226,11 @@ def voting_aftermath(bot, game, voting_success):
     log.info('voting_aftermath called')
     game.board.state.last_votes = {}
     if voting_success:
-        if game.board.state.fascist_track >= 3 and game.board.state.chancellor.role == "هیتلر":
+        if game.board.state.fascist_track >= 3 and game.board.state.chancellor.role == "Blue":
             # fascists win, because Blue was elected as chancellor after 3 fascist policies
             game.board.state.game_endcode = -2
             end_game(bot, game, game.board.state.game_endcode)
-        elif game.board.state.fascist_track >= 3 and game.board.state.chancellor.role != "هیتلر" and game.board.state.chancellor not in game.board.state.not_blues:
+        elif game.board.state.fascist_track >= 3 and game.board.state.chancellor.role != "Blue" and game.board.state.chancellor not in game.board.state.not_blues:
             game.board.state.not_blues.append(game.board.state.chancellor)
             draw_policies(bot, game)
         else:
@@ -566,7 +566,7 @@ def choose_kill(bot, update):
             callback.from_user.id,
             callback.message.message_id
         )
-        if chosen.role == "هیتلر":
+        if chosen.role == "Blue":
             bot.send_message(
                 game.cid,
                 '\u200Fرئیس‌جمهور ' + game.board.state.president.name + '، ' + chosen.name + ' را کشت.'
@@ -596,9 +596,11 @@ def action_choose(bot, game):
 
     inspectMarkup = InlineKeyboardMarkup(btns)
     bot.send_message(game.board.state.president.uid, game.board.print_board())
-    bot.send_message(game.board.state.president.uid,
-                     'You get to choose the next presidential candidate. Afterwards the order resumes back to normal. Choose wisely!',
-                     reply_markup=inspectMarkup)
+    bot.send_message(
+        game.board.state.president.uid,
+        '\u200Fشما باید نامزد بعدی ریاست‌جمهوری را انتخاب کنید. سپس ترتیب نوبت به حالت عادی بازمی‌گردد. عاقلانه انتخاب کنید!',
+        reply_markup=inspectMarkup
+    )
 
 
 def choose_choose(bot, update):
@@ -614,11 +616,16 @@ def choose_choose(bot, update):
         log.info(
             "Player %s (%d) chose %s (%d) as next president" % (
                 callback.from_user.first_name, callback.from_user.id, chosen.name, chosen.uid))
-        bot.edit_message_text("You chose %s as the next president!" % chosen.name, callback.from_user.id,
-                              callback.message.message_id)
-        bot.send_message(game.cid,
-                         "President %s chose %s as the next president." % (
-                             game.board.state.president.name, chosen.name))
+        bot.edit_message_text(
+            '\u200Fشما %s را به‌عنوان رئیس‌جمهور بعدی انتخاب کردید!' % chosen.name,
+            callback.from_user.id,
+            callback.message.message_id
+        )
+        bot.send_message(
+            game.cid,
+            '\u200Fرئیس‌جمهور %s، %s را به‌عنوان رئیس‌جمهور بعدی انتخاب کرد.' %
+            (game.board.state.president.name, chosen.name)
+        )
         start_next_round(bot, game)
     except:
         log.error("choose_choose: Game or board should not be None!")
@@ -635,9 +642,11 @@ def action_inspect(bot, game):
 
     inspectMarkup = InlineKeyboardMarkup(btns)
     bot.send_message(game.board.state.president.uid, game.board.print_board())
-    bot.send_message(game.board.state.president.uid,
-                     'You may see the party membership of one player. Which do you want to know? Choose wisely!',
-                     reply_markup=inspectMarkup)
+    bot.send_message(
+        game.board.state.president.uid,
+        '\u200Fشما می‌توانید عضویت حزبی یک بازیکن را ببینید. عضویت چه کسی را می‌خواهید بدانید؟ عاقلانه انتخاب کنید!',
+        reply_markup=inspectMarkup
+    )
 
 
 def choose_inspect(bot, update):
@@ -653,10 +662,16 @@ def choose_inspect(bot, update):
             "Player %s (%d) inspects %s (%d)'s party membership (%s)" % (
                 callback.from_user.first_name, callback.from_user.id, chosen.name, chosen.uid,
                 chosen.party))
-        bot.edit_message_text("The party membership of %s is %s" % (chosen.name, chosen.party),
-                              callback.from_user.id,
-                              callback.message.message_id)
-        bot.send_message(game.cid, "President %s inspected %s." % (game.board.state.president.name, chosen.name))
+        bot.edit_message_text(
+            '\u200Fعضویت حزبی %s، %s است' % (chosen.name, chosen.party),
+            callback.from_user.id,
+            callback.message.message_id
+        )
+        bot.send_message(
+            game.cid,
+            '\u200Fرئیس‌جمهور %s، %s را بازرسی کرد.' %
+            (game.board.state.president.name, chosen.name)
+        )
         start_next_round(bot, game)
     except:
         log.error("choose_inspect: Game or board should not be None!")
@@ -696,28 +711,36 @@ def end_game(bot, game, game_endcode):
 
     if game_endcode == 99:
         if GamesController.games[game.cid].board is not None:
-            bot.send_message(game.cid,
-                             "Game cancelled!\n\n%s" % game.print_roles())
+            bot.send_message(game.cid, '\u200Fبازی لغو شد!\n\n%s' % game.print_roles())
             # bot.send_message(ADMIN, "Game of Secret Blue canceled in group %d" % game.cid)
             stats['cancelled'] = stats['cancelled'] + 1
         else:
-            bot.send_message(game.cid, "Game cancelled!")
+            bot.send_message(game.cid, '\u200Fبازی لغو شد!')
     else:
         if game_endcode == -2:
-            bot.send_message(game.cid,
-                             "Game over! The fascists win by electing Blue as Chancellor!\n\n%s" % game.print_roles())
+            bot.send_message(
+                game.cid,
+                '\u200Fپایان بازی! فاشیست‌ها با انتخاب هیتلر به‌عنوان صدراعظم پیروز شدند!\n\n%s' %
+                game.print_roles()
+            )
             stats['fascwin_blue'] = stats['fascwin_blue'] + 1
         if game_endcode == -1:
-            bot.send_message(game.cid,
-                             "Game over! The fascists win by enacting 6 fascist policies!\n\n%s" % game.print_roles())
+            bot.send_message(
+                game.cid,
+                '\u200Fپایان بازی! فاشیست‌ها با تصویب ۶ سیاست فاشیستی پیروز شدند!\n\n%s' % game.print_roles()
+            )
             stats['fascwin_policies'] = stats['fascwin_policies'] + 1
         if game_endcode == 1:
-            bot.send_message(game.cid,
-                             "Game over! The liberals win by enacting 5 liberal policies!\n\n%s" % game.print_roles())
+            bot.send_message(
+                game.cid,
+                '\u200Fپایان بازی! لیبرال‌ها با تصویب ۵ سیاست لیبرال پیروز شدند!\n\n%s' % game.print_roles()
+            )
             stats['libwin_policies'] = stats['libwin_policies'] + 1
         if game_endcode == 2:
-            bot.send_message(game.cid,
-                             "Game over! The liberals win by killing Blue!\n\n%s" % game.print_roles())
+            bot.send_message(
+                game.cid,
+                '\u200Fپایان بازی! لیبرال‌ها با کشتن هیتلر پیروز شدند!\n\n%s' % game.print_roles()
+            )
             stats['libwin_kill'] = stats['libwin_kill'] + 1
 
             # bot.send_message(ADMIN, "Game of Secret Blue ended in group %d" % game.cid)
@@ -729,9 +752,11 @@ def end_game(bot, game, game_endcode):
 
 def inform_players(bot, game, cid, player_number):
     log.info('inform_players called')
-    bot.send_message(cid,
-                     "Let's start the game with %d players!\n%s\nGo to your private chat and look at your secret role!" % (
-                         player_number, print_player_info(player_number)))
+    bot.send_message(
+        cid,
+        '\u200Fبازی را با %d بازیکن شروع کنیم!\n%s\nبه چت خصوصی‌تان بروید و نقش مخفی خود را ببینید!' %
+        (player_number, print_player_info(player_number))
+    )
     available_roles = list(playerSets[player_number]["roles"])  # copy not reference because we need it again later
     for uid in game.playerlist:
         random_index = randrange(len(available_roles))
@@ -739,22 +764,25 @@ def inform_players(bot, game, cid, player_number):
         party = get_membership(role)
         game.playerlist[uid].role = role
         game.playerlist[uid].party = party
-        bot.send_message(uid, "Your secret role is: %s\nYour party membership is: %s" % (role, party))
+        bot.send_message(
+            uid,
+            '\u200Fنقش مخفی شما: %s\nعضویت حزبی شما: %s' % (role, party)
+        )
 
 
 def print_player_info(player_number):
     if player_number == 5:
-        return "There are 3 Liberals, 1 Fascist and Blue. Blue knows who the Fascist is."
+        return '\u200F۳ لیبرال، ۱ فاشیست و هیتلر وجود دارد. هیتلر می‌داند فاشیست چه کسی است.'
     elif player_number == 6:
-        return "There are 4 Liberals, 1 Fascist and Blue. Blue knows who the Fascist is."
+        return '\u200F۴ لیبرال، ۱ فاشیست و هیتلر وجود دارد. هیتلر می‌داند فاشیست چه کسی است.'
     elif player_number == 7:
-        return "There are 4 Liberals, 2 Fascist and Blue. Blue doesn't know who the Fascists are."
+        return '\u200F۴ لیبرال، ۲ فاشیست و هیتلر وجود دارند. هیتلر نمی‌داند فاشیست‌ها چه کسانی هستند.'
     elif player_number == 8:
-        return "There are 5 Liberals, 2 Fascist and Blue. Blue doesn't know who the Fascists are."
+        return '\u200F۵ لیبرال، ۲ فاشیست و هیتلر وجود دارند. هیتلر نمی‌داند فاشیست‌ها چه کسانی هستند.'
     elif player_number == 9:
-        return "There are 5 Liberals, 3 Fascist and Blue. Blue doesn't know who the Fascists are."
+        return '\u200F۵ لیبرال، ۳ فاشیست و هیتلر وجود دارند. هیتلر نمی‌داند فاشیست‌ها چه کسانی هستند.'
     elif player_number == 10:
-        return "There are 6 Liberals, 3 Fascist and Blue. Blue doesn't know who the Fascists are."
+        return '\u200F۶ لیبرال، ۳ فاشیست و هیتلر وجود دارند. هیتلر نمی‌داند فاشیست‌ها چه کسانی هستند.'
 
 
 def inform_fascists(bot, game, player_number):
@@ -770,13 +798,13 @@ def inform_fascists(bot, game, player_number):
                     if f.uid != uid:
                         fstring += f.name + ", "
                 fstring = fstring[:-2]
-                bot.send_message(uid, "Your fellow fascists are: %s" % fstring)
+                bot.send_message(uid, '\u200Fهم‌حزبی‌های فاشیست شما: %s' % fstring)
             blue = game.get_blue()
-            bot.send_message(uid, "Blue is: %s" % blue.name)
+            bot.send_message(uid, '\u200Fهیتلر این است: %s' % blue.name)
         elif role == "Blue":
             if player_number <= 6:
                 fascists = game.get_fascists()
-                bot.send_message(uid, "Your fellow fascist is: %s" % fascists[0].name)
+                bot.send_message(uid, '\u200Fهم‌حزبی فاشیست شما: %s' % fascists[0].name)
         elif role == "Liberal":
             pass
         else:
@@ -807,8 +835,10 @@ def shuffle_policy_pile(bot, game):
         game.board.discards += game.board.policies
         game.board.policies = random.sample(game.board.discards, len(game.board.discards))
         game.board.discards = []
-        bot.send_message(game.cid,
-                         "There were not enough cards left on the policy pile so I shuffled the rest with the discard pile!")
+        bot.send_message(
+            game.cid,
+            '\u200Fکارت‌های کافی در دستهٔ سیاست باقی نمانده بود؛ بقیه را با دستهٔ دورریز مخلوط کردم!'
+        )
 
 
 def error(bot, update, error):
